@@ -13,10 +13,17 @@
 
 
             apartmentsList.innerHTML += 
-            `<figure class= "apartment_figure">
+            `<figure class= "apartment_figure" id="${data.destinations[i].id}">
                 <img src= "${data.destinations[i].image}" alt=""/>
                 <div class="more_div">
-                    <button class="apartment_button"><i class="fa-solid fa-heart"></i></button>
+                    <button class="apartment_button">
+                        <i class= "${
+                            localStorage.getItem(data.destinations[i].id)
+                            ? "fa-solid fa-heart"
+                            : "fa-regular fa-heart"
+                        }">
+                        </i>
+                    </button>
                     <a href="destination.html?id=${data.destinations[i].id}" class="link"> More
                     </a>
                 </div>
@@ -46,7 +53,7 @@
             
             
         }
-    }).catch(error => console.error(error));
+    // }).catch(error => console.error(error));
 
 
 
@@ -83,8 +90,25 @@
 // }).catch(error => console.error(error));
 
 
-// })
+})
 
 
 
+
+document.querySelector(".apartmentsList").addEventListener("click", (e) => {
+    console.log(e)
+    if(e.target.classList.contains("fa-heart")){
+        console.log(e.target)
+        let destinationsId = e.target.closest("figure").attributes.id.value
+        console.log(destinationsId)
+        if(!localStorage.getItem(destinationsId, destinationsId)){
+            localStorage.setItem(destinationsId, destinationsId)
+            e.target.classList.add("fa-solid")
+        }else{
+            localStorage.removeItem(destinationsId)
+            e.target.classList.remove("fa-solid")
+            e.target.classList.add("fa-regular")
+        }
+    }
+})
 
